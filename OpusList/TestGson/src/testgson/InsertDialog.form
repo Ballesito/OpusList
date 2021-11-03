@@ -108,9 +108,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtRegistre">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRegistreActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblRegistre">
       <Properties>

@@ -34,7 +34,7 @@ public class InsertDialog extends javax.swing.JDialog {
     //Nos dice el direcotrio home de nuestro usuario.
     //Tambien iria bien en Linux.
     String userFolder = System.getProperty("user.home");
-    String ubi = "\\AppData\\Local\\OpusList\\images";
+    String ubi = "\\AppData\\Local\\OpusList\\images\\";
     
 
     /**
@@ -72,12 +72,6 @@ public class InsertDialog extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
-            }
-        });
-
-        txtRegistre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRegistreActionPerformed(evt);
             }
         });
 
@@ -177,10 +171,6 @@ public class InsertDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtRegistreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegistreActionPerformed
-        
-    }//GEN-LAST:event_txtRegistreActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txtRegistre.setEnabled(false);
         
@@ -209,7 +199,7 @@ public class InsertDialog extends javax.swing.JDialog {
         try {
             path = fileChooser.getSelectedFile().getAbsolutePath();
         } catch (NullPointerException npe) {
-            path = "src\\images\\noImage.jpg";
+            path = "images\\noImage.jpg";
         }
         
         if(returnOption == JFileChooser.APPROVE_OPTION) {
@@ -225,6 +215,12 @@ public class InsertDialog extends javax.swing.JDialog {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
 
+        try {
+            path = fileChooser.getSelectedFile().getAbsolutePath();
+        } catch (NullPointerException npe) {
+            path = "images\\noImage.jpg";
+        }
+        
         try {
             //Ahora vamos a guardar una imagen que hemos seleccionado en la carpeta
             //de nuestro home.
