@@ -20,7 +20,9 @@ import javax.swing.JList;
  */
 public class MainForm extends javax.swing.JFrame {
     
-    private JList<Obra> lstObras;
+    public JList<Obra> lstObras;
+    public ArrayList<Obra> obras;
+    public JsonReader reader;
     
     private static final java.lang.reflect.Type LIST_OF_OBRA_TYPE = new TypeToken<List<Obra>>() {}.getType();
     /**
@@ -119,8 +121,8 @@ public class MainForm extends javax.swing.JFrame {
         DefaultListModel<Obra> obrasListModel = new DefaultListModel<Obra>();
         
         try {
-            JsonReader reader = new JsonReader(new FileReader(System.getProperty("user.home") + "\\AppData\\Local\\OpusList\\data\\obres.json"));
-            ArrayList<Obra> obras = gson.fromJson(reader, LIST_OF_OBRA_TYPE);
+            reader = new JsonReader(new FileReader(System.getProperty("user.home") + "\\AppData\\Local\\OpusList\\data\\obres.json"));
+            obras = gson.fromJson(reader, LIST_OF_OBRA_TYPE);
             
             for(Obra o: obras) 
                 obrasListModel.addElement(o);
@@ -132,7 +134,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void mniInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInsertActionPerformed
-        
+        InsertDialog id = new InsertDialog(this, true);
+        id.setVisible(true);
     }//GEN-LAST:event_mniInsertActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

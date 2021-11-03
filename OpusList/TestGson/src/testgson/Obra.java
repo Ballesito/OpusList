@@ -61,6 +61,4 @@ public class Obra {
     public String toString() {
         return registre + ": " + titol + ", " + any + " (" + format + "). " + autor; 
     }
-    
-    
 }
