@@ -15,6 +15,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -247,8 +249,7 @@ public class InsertDialog extends javax.swing.JDialog {
             g.toJson(mf.lstObras, w);*/
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        }
-        
+        }   
         
         Obra newObra = new Obra(registre, txtTitol.getText(), txtAny.getText(), txtFormat.getText(), txtAutor.getText(), mf.pathName);
         
@@ -256,8 +257,10 @@ public class InsertDialog extends javax.swing.JDialog {
         
         mf.obras.add(newObra);
         
+        
         for(Obra o: mf.obras) 
                 mf.obrasListModel.addElement(o);
+        
             mf.lstObras.setModel(mf.obrasListModel);
         
         this.setVisible(false);
@@ -274,10 +277,12 @@ public class InsertDialog extends javax.swing.JDialog {
             newHeight = desiredHeight;
             newWidth = Math.round(desiredHeight * aspectRatio);
         }
+        
         Image resultingImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         BufferedImage outputImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
         outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
         ImageIcon imageIcon = new ImageIcon(outputImage);
+        
         return imageIcon;
     }
     

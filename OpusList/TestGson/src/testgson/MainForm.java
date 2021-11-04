@@ -6,12 +6,18 @@
 package testgson;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -30,6 +36,12 @@ public class MainForm extends javax.swing.JFrame {
     public String obraUpdate;
     
     public InterUpdateDialog iud;
+    
+    
+    //Nos dice el direcotrio home de nuestro usuario.
+    //Tambien iria bien en Linux.
+    public String userFolder = System.getProperty("user.home");
+    public String ubiData = "\\AppData\\Local\\OpusList\\data\\";
 
     
     private static final java.lang.reflect.Type LIST_OF_OBRA_TYPE = new TypeToken<List<Obra>>() {}.getType();
@@ -71,7 +83,7 @@ public class MainForm extends javax.swing.JFrame {
         mniInsert = new javax.swing.JMenuItem();
         mniUpdate = new javax.swing.JMenuItem();
         mniDelete = new javax.swing.JMenuItem();
-        Save = new javax.swing.JMenu();
+        mniSave = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -101,15 +113,15 @@ public class MainForm extends javax.swing.JFrame {
         mniDelete.setText("Delete");
         mnuBar.add(mniDelete);
 
-        mnuMenu.add(mnuBar);
-
-        Save.setText("Save");
-        Save.addActionListener(new java.awt.event.ActionListener() {
+        mniSave.setText("Save");
+        mniSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveActionPerformed(evt);
+                mniSaveActionPerformed(evt);
             }
         });
-        mnuMenu.add(Save);
+        mnuBar.add(mniSave);
+
+        mnuMenu.add(mnuBar);
 
         setJMenuBar(mnuMenu);
 
@@ -160,9 +172,14 @@ public class MainForm extends javax.swing.JFrame {
         iud.setVisible(true);
     }//GEN-LAST:event_mniUpdateActionPerformed
 
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SaveActionPerformed
+    private void mniSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSaveActionPerformed
+        try(Writer w = new FileWriter(userFolder + ubiData + "obres.json")) {
+            Gson g = new GsonBuilder().create();
+            g.toJson(obras, w);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }//GEN-LAST:event_mniSaveActionPerformed
 
     private void lstObrasValueChanged(javax.swing.event.ListSelectionEvent evt) {
         
@@ -214,9 +231,9 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Save;
     private javax.swing.JMenuItem mniDelete;
     private javax.swing.JMenuItem mniInsert;
+    private javax.swing.JMenuItem mniSave;
     private javax.swing.JMenuItem mniUpdate;
     private javax.swing.JMenu mnuBar;
     private javax.swing.JMenuBar mnuMenu;
