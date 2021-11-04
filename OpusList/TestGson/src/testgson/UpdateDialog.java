@@ -4,11 +4,26 @@
  */
 package testgson;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Alumne
  */
 public class UpdateDialog extends javax.swing.JDialog {
+    
+    //Hace una instancia de la clase padre, es decir de MainForm
+    //guardando toda la informacion de ella.
+    private final MainForm mf = (MainForm) this.getParent();
+    
+    //Nos dice el direcotrio home de nuestro usuario.
+    //Tambien iria bien en Linux.
+    public String userFolder = System.getProperty("user.home");
+    public String ubi = "\\AppData\\Local\\OpusList\\images\\";
 
     /**
      * Creates new form UpdateDialog
@@ -28,6 +43,11 @@ public class UpdateDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -42,6 +62,28 @@ public class UpdateDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        /*try {
+            for (Obra o: mf.obras) {
+                if (o.getRegistre().equals(mf.iud.num)) {
+                    txtRegistre.setText(o.getRegistre());
+                    txtTitol.setText(o.getTitol());
+                    txtAny.setText(o.getAny());
+                    txtFormat.setText(o.getFormat());
+                    txtAutor.setText(o.getAutor());
+                    BufferedImage buIm = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = resizeImageIcon(buIm, lblImage.getWidth(), lblImage.getHeight());
+                    lblImage.setIcon(icon);
+                    BufferedImage bi = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = new ImageIcon(bi);
+                    lblImage.setIcon(icon);
+                }
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }*/
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

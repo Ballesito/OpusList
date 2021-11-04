@@ -4,46 +4,41 @@
  */
 package testgson;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
+import java.util.HashSet;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 /**
  *
- * @author Alumne
+ * @author Ballesito
  */
-public class InsertDialog extends javax.swing.JDialog {
+public class DobleClick extends javax.swing.JDialog {
+    
     //Hace una instancia de la clase padre, es decir de MainForm
     //guardando toda la informacion de ella.
     private final MainForm mf = (MainForm) this.getParent();
+    
+    //Nos dice el direcotrio home de nuestro usuario.
+    //Tambien iria bien en Linux.
+    public String userFolder = System.getProperty("user.home");
+    public String ubi = "\\AppData\\Local\\OpusList\\images\\";
     
     String registre = "";
     
     String path = "";
     
     JFileChooser fileChooser;
-    
-    //Nos dice el direcotrio home de nuestro usuario.
-    //Tambien iria bien en Linux.
-    public String userFolder = System.getProperty("user.home");
-    public String ubi = "\\AppData\\Local\\OpusList\\images\\";
-    public String ubiData = "\\AppData\\Local\\OpusList\\data\\";
 
     /**
-     * Creates new form InsertDialog
+     * Creates new form DobleClick
      */
-    public InsertDialog(java.awt.Frame parent, boolean modal) {
+    public DobleClick(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -57,6 +52,10 @@ public class InsertDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtAutor = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
+        btnSelectImage = new javax.swing.JButton();
+        lblImage = new javax.swing.JLabel();
         txtRegistre = new javax.swing.JTextField();
         lblRegistre = new javax.swing.JLabel();
         txtTitol = new javax.swing.JTextField();
@@ -66,15 +65,25 @@ public class InsertDialog extends javax.swing.JDialog {
         lblFormat = new javax.swing.JLabel();
         txtFormat = new javax.swing.JTextField();
         lblAutor = new javax.swing.JLabel();
-        txtAutor = new javax.swing.JTextField();
-        btnInsert = new javax.swing.JButton();
-        btnSelectImage = new javax.swing.JButton();
-        lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnSelectImage.setText("Select Image");
+        btnSelectImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectImageActionPerformed(evt);
             }
         });
 
@@ -88,117 +97,84 @@ public class InsertDialog extends javax.swing.JDialog {
 
         lblAutor.setText("Autor");
 
-        btnInsert.setText("Insert");
-        btnInsert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertActionPerformed(evt);
-            }
-        });
-
-        btnSelectImage.setText("Select Image");
-        btnSelectImage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectImageActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtRegistre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(txtTitol)
-                    .addComponent(txtAny)
-                    .addComponent(txtFormat)
-                    .addComponent(txtAutor)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(lblRegistre))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblTitol))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblAny))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(15, 15, 15)
                         .addComponent(lblFormat))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblAutor)))
+                        .addGap(14, 14, 14)
+                        .addComponent(lblTitol))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(lblRegistre))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtRegistre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(txtTitol)
+                                .addComponent(txtAny)
+                                .addComponent(txtFormat)
+                                .addComponent(txtAutor))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblAny)
+                                    .addComponent(lblAutor))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 333, Short.MAX_VALUE)
+                .addGap(0, 438, Short.MAX_VALUE)
                 .addComponent(btnSelectImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lblRegistre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRegistre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtRegistre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblTitol)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTitol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblAny)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtAny, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblFormat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblAutor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsert)
+                    .addComponent(btnUpdate)
                     .addComponent(btnSelectImage))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtRegistre.setEnabled(false);
-        
-        Random r = new Random();
-        int numero = r.nextInt(10000000) + 1;
-        String nom = "IB";
-        
-        for(Obra o: mf.obras)
-            if (o.getRegistre().equals(registre))
-                numero = r.nextInt(10000000) + 1;
-        
-        registre = String.format("%s%08d", nom, numero);
-        txtRegistre.setText(registre);
-    }//GEN-LAST:event_formWindowOpened
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
-    private void btnSelectImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectImageActionPerformed
-        //Es para que te salga un Dialog para seleccionar un archivo del sistema.
-        fileChooser = new JFileChooser();
-        //Y mostramos la ventana para su busqueda.
-        
-        //el JFileChooser devuelte uno de tres valores, si pones el 
-        //APPROVE_OPTION hacemos que si seleccionamos un archivo y le damos a
-        //cancelar no mostrara su path, simplemente no saldra nada.
-        int returnOption =  fileChooser.showOpenDialog(this);
-        
+        mf.obrasListModel.clear();
+
         try {
             path = fileChooser.getSelectedFile().getAbsolutePath();
             mf.pathName = fileChooser.getSelectedFile().getName();
@@ -206,7 +182,82 @@ public class InsertDialog extends javax.swing.JDialog {
             path = "images\\noImage.jpg";
             mf.pathName = "noImage.jpg";
         }
-        
+
+        try {
+            for (Obra o: mf.obras) {
+                if (o.getRegistre() == mf.obraUpdate) {
+                    
+                    registre = o.getRegistre();
+                    
+                    
+                    o.setRegistre(txtRegistre.getText());
+                    o.setTitol(txtTitol.getText());
+                    o.setAny(txtAny.getText());
+                    o.setFormat(txtFormat.getText());
+                    o.setAutor(txtAutor.getText());
+                    o.setImatge(mf.pathName);
+                    
+                    
+                    /*txtRegistre.setText(o.getRegistre());
+                    txtTitol.setText(o.getTitol());
+                    txtAny.setText(o.getAny());
+                    txtFormat.setText(o.getFormat());
+                    txtAutor.setText(o.getAutor());
+                    BufferedImage buIm = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = resizeImageIcon(buIm, lblImage.getWidth(), lblImage.getHeight());
+                    lblImage.setIcon(icon);
+                    BufferedImage bi = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = new ImageIcon(bi);
+                    lblImage.setIcon(icon);*/     
+                    
+                    
+                    //Ahora vamos a guardar una imagen que hemos seleccionado en la carpeta
+                    //de nuestro home.
+                    //Esa carpeta de UserList2 en AppData/Local la he creado manualmente.
+                    //noImage = fileChooser.getSelectedFile().getAbsolutePath();
+                    
+                    BufferedImage bufferedImage = ImageIO.read(new File(path));
+                    String outputImageAbsolutePath = userFolder + ubi + registre + ".jpg";
+                    File outputImage = new File(outputImageAbsolutePath);
+                    //Creamos la imagen con la extension que le hemos puesto en la ruta
+                    //que hemos creado.
+                    ImageIO.write(bufferedImage, "jpg", outputImage);
+                }
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        /*Obra newObra = new Obra(registre, txtTitol.getText(), txtAny.getText(), txtFormat.getText(), txtAutor.getText(), mf.pathName);
+
+        mf.obras.add(newObra);*/
+
+        for(Obra o: mf.obras)
+        mf.obrasListModel.addElement(o);
+        mf.lstObras.setModel(mf.obrasListModel);
+
+        this.setVisible(false);
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnSelectImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectImageActionPerformed
+        //Es para que te salga un Dialog para seleccionar un archivo del sistema.
+        fileChooser = new JFileChooser();
+        //Y mostramos la ventana para su busqueda.
+
+        //el JFileChooser devuelte uno de tres valores, si pones el
+        //APPROVE_OPTION hacemos que si seleccionamos un archivo y le damos a
+        //cancelar no mostrara su path, simplemente no saldra nada.
+        int returnOption =  fileChooser.showOpenDialog(this);
+
+        try {
+            path = fileChooser.getSelectedFile().getAbsolutePath();
+            mf.pathName = fileChooser.getSelectedFile().getName();
+        } catch (NullPointerException npe) {
+            path = "images\\noImage.jpg";
+            mf.pathName = "noImage.jpg";
+        }
+
         if(returnOption == JFileChooser.APPROVE_OPTION) {
             try {
                 BufferedImage buIm = ImageIO.read(new File(path));
@@ -218,50 +269,29 @@ public class InsertDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnSelectImageActionPerformed
 
-    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-
-        mf.obrasListModel.clear();
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtRegistre.setEnabled(false);
         
         try {
-            path = fileChooser.getSelectedFile().getAbsolutePath();
-            mf.pathName = fileChooser.getSelectedFile().getName();
-        } catch (NullPointerException npe) {
-            path = "images\\noImage.jpg";
-            mf.pathName = "noImage.jpg";
-        }
-        
-        try {
-            //Ahora vamos a guardar una imagen que hemos seleccionado en la carpeta
-            //de nuestro home.
-            //Esa carpeta de UserList2 en AppData/Local la he creado manualmente.
-            //noImage = fileChooser.getSelectedFile().getAbsolutePath();
-            BufferedImage bufferedImage = ImageIO.read(new File(path));
-            String outputImageAbsolutePath = userFolder + ubi + registre + ".jpg";
-            File outputImage = new File(outputImageAbsolutePath);
-            //Creamos la imagen con la extension que le hemos puesto en la ruta
-            //que hemos creado.
-            ImageIO.write(bufferedImage, "jpg", outputImage);
-            
-            /*Writer w = new FileWriter(userFolder + ubiData + "obres.json");
-            Gson g = new GsonBuilder().create();
-            g.toJson(mf.lstObras, w);*/
+            for (Obra o: mf.obras) {
+                if (o.getRegistre() == mf.lstObras.getSelectedValue().getRegistre()) {
+                    txtRegistre.setText(o.getRegistre());
+                    txtTitol.setText(o.getTitol());
+                    txtAny.setText(o.getAny());
+                    txtFormat.setText(o.getFormat());
+                    txtAutor.setText(o.getAutor());
+                    BufferedImage buIm = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = resizeImageIcon(buIm, lblImage.getWidth(), lblImage.getHeight());
+                    lblImage.setIcon(icon);
+                    /*BufferedImage bi = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    ImageIcon icon = new ImageIcon(bi);
+                    lblImage.setIcon(icon);*/
+                }
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        
-        
-        Obra newObra = new Obra(registre, txtTitol.getText(), txtAny.getText(), txtFormat.getText(), txtAutor.getText(), mf.pathName);
-        
-        newObra.setPathAbsolute(path);
-        
-        mf.obras.add(newObra);
-        
-        for(Obra o: mf.obras) 
-                mf.obrasListModel.addElement(o);
-            mf.lstObras.setModel(mf.obrasListModel);
-        
-        this.setVisible(false);
-    }//GEN-LAST:event_btnInsertActionPerformed
+    }//GEN-LAST:event_formWindowOpened
 
     private ImageIcon resizeImageIcon (BufferedImage originalImage, int desiredWidth, int desiredHeight) {
         int newHeight = 0;    
@@ -284,7 +314,6 @@ public class InsertDialog extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -299,20 +328,20 @@ public class InsertDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DobleClick.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DobleClick.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DobleClick.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DobleClick.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                InsertDialog dialog = new InsertDialog(new javax.swing.JFrame(), true);
+                DobleClick dialog = new DobleClick(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -325,8 +354,8 @@ public class InsertDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSelectImage;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel lblAny;
     private javax.swing.JLabel lblAutor;
     private javax.swing.JLabel lblFormat;

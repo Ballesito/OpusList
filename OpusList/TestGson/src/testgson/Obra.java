@@ -11,6 +11,15 @@ package testgson;
  */
 public class Obra {
 
+    public Obra(String registre, String titol, String any, String format, String autor, String imatge) {
+        this.registre = registre;
+        this.titol = titol;
+        this.any = any;
+        this.format = format;
+        this.autor = autor;
+        this.imatge = imatge;
+    }
+
     public String getRegistre() {
         return registre;
     }
@@ -51,14 +60,33 @@ public class Obra {
         this.autor = autor;
     }
     
+    public String getImatge() {
+        return imatge;
+    }
+
+    public void setImatge(String imatge) {
+        this.imatge = imatge;
+    }
+
+    public String getPathAbsolute() {
+        return pathAbsolute;
+    }
+
+    public void setPathAbsolute(String pathAbsolute) {
+        this.pathAbsolute = pathAbsolute;
+    }
+
+    
     private String registre;
     private String titol;
     private String any;
     private String format;
     private String autor;
+    private String imatge;
+    private String pathAbsolute;
 
     @Override
     public String toString() {
-        return registre + ": " + titol + ", " + any + " (" + format + "). " + autor; 
+        return registre + ": " + titol + ", " + any + " (" + format + "). " + autor + ", " + imatge;
     }
 }
