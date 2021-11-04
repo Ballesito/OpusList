@@ -222,7 +222,7 @@ public class InsertDialog extends javax.swing.JDialog {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
 
-        //mf.obrasListModel.clear();
+        mf.obrasListModel.clear();
         
         try {
             path = fileChooser.getSelectedFile().getAbsolutePath();
@@ -256,7 +256,6 @@ public class InsertDialog extends javax.swing.JDialog {
         newObra.setPathAbsolute(path);
         
         mf.obras.add(newObra);
-        
         
         for(Obra o: mf.obras) 
                 mf.obrasListModel.addElement(o);

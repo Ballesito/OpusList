@@ -87,6 +87,9 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -111,6 +114,11 @@ public class MainForm extends javax.swing.JFrame {
         mnuBar.add(mniUpdate);
 
         mniDelete.setText("Delete");
+        mniDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDeleteActionPerformed(evt);
+            }
+        });
         mnuBar.add(mniDelete);
 
         mniSave.setText("Save");
@@ -180,6 +188,15 @@ public class MainForm extends javax.swing.JFrame {
             ioe.printStackTrace();
         }
     }//GEN-LAST:event_mniSaveActionPerformed
+
+    private void mniDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDeleteActionPerformed
+        DeleteDialog dd = new DeleteDialog(this, true);
+        dd.setVisible(true);
+    }//GEN-LAST:event_mniDeleteActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mniSave.doClick();
+    }//GEN-LAST:event_formWindowClosing
 
     private void lstObrasValueChanged(javax.swing.event.ListSelectionEvent evt) {
         

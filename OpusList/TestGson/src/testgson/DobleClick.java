@@ -27,7 +27,7 @@ public class DobleClick extends javax.swing.JDialog {
     //Nos dice el direcotrio home de nuestro usuario.
     //Tambien iria bien en Linux.
     public String userFolder = System.getProperty("user.home");
-    public String ubi = "\\AppData\\Local\\OpusList\\images\\";
+    public String ubi = "images\\";
     
     String registre = "";
     
@@ -217,7 +217,7 @@ public class DobleClick extends javax.swing.JDialog {
                     //noImage = fileChooser.getSelectedFile().getAbsolutePath();
                     
                     BufferedImage bufferedImage = ImageIO.read(new File(path));
-                    String outputImageAbsolutePath = userFolder + ubi + registre + ".jpg";
+                    String outputImageAbsolutePath = ubi + registre + ".jpg";
                     File outputImage = new File(outputImageAbsolutePath);
                     //Creamos la imagen con la extension que le hemos puesto en la ruta
                     //que hemos creado.
@@ -281,7 +281,7 @@ public class DobleClick extends javax.swing.JDialog {
                     txtAny.setText(o.getAny());
                     txtFormat.setText(o.getFormat());
                     txtAutor.setText(o.getAutor());
-                    BufferedImage buIm = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
+                    BufferedImage buIm = ImageIO.read(new File(ubi + o.getImatge()));
                     ImageIcon icon = resizeImageIcon(buIm, lblImage.getWidth(), lblImage.getHeight());
                     lblImage.setIcon(icon);
                     /*BufferedImage bi = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
