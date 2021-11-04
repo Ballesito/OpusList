@@ -20,6 +20,8 @@ public class InterUpdateDialog extends javax.swing.JDialog {
     private final MainForm mf = (MainForm) this.getParent();
     public String num;
     
+    //public String obra;
+    
     
 
     /**
@@ -120,7 +122,16 @@ public class InterUpdateDialog extends javax.swing.JDialog {
                 /*BufferedImage bi = ImageIO.read(new File(userFolder + ubi + o.getImatge()));
                 ImageIcon icon = new ImageIcon(bi);
                 lblImage.setIcon(icon);*/
-                txtNum.setText("Bien hecho");
+                //txtNum.setText("Bien hecho");
+                
+                //obra = mf.obraUpdate;
+                
+                this.setVisible(false);
+                UpdateDialog ud = new UpdateDialog(mf, true);
+                ud.setVisible(true);
+                
+                
+                
             } else {
                 lblFallo.setVisible(true);
                 txtNum.setText("");

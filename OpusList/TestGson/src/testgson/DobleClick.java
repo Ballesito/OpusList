@@ -233,7 +233,8 @@ public class DobleClick extends javax.swing.JDialog {
         mf.obras.add(newObra);*/
 
         for(Obra o: mf.obras)
-        mf.obrasListModel.addElement(o);
+            mf.obrasListModel.addElement(o);
+        
         mf.lstObras.setModel(mf.obrasListModel);
 
         this.setVisible(false);
