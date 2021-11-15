@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -222,49 +223,61 @@ public class InsertDialog extends javax.swing.JDialog {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
 
-        mf.obrasListModel.clear();
+        if (txtTitol.getText().isEmpty() || txtAny.getText().isEmpty() || txtFormat.getText().isEmpty() || txtAutor.getText().isEmpty()) {
+            errorDialog("No puedes insertar una obra con texto vacio.");
+        } else {
         
-        try {
-            path = fileChooser.getSelectedFile().getAbsolutePath();
-            mf.pathName = fileChooser.getSelectedFile().getName();
-        } catch (NullPointerException npe) {
-            path = "images\\noImage.jpg";
-            mf.pathName = "noImage.jpg";
+            mf.obrasListModel.clear();
+        
+            try {
+                path = fileChooser.getSelectedFile().getAbsolutePath();
+                mf.pathName = fileChooser.getSelectedFile().getName();
+            } catch (NullPointerException npe) {
+                path = "images\\noImage.jpg";
+                mf.pathName = "noImage.jpg";
+            }
+
+            try {
+                //Ahora vamos a guardar una imagen que hemos seleccionado en la carpeta
+                //de nuestro home.
+                //Esa carpeta de UserList2 en AppData/Local la he creado manualmente.
+                //noImage = fileChooser.getSelectedFile().getAbsolutePath();
+                BufferedImage bufferedImage = ImageIO.read(new File(path));
+                String outputImageAbsolutePath = userFolder + ubi + registre + ".jpg";
+                File outputImage = new File(outputImageAbsolutePath);
+                //Creamos la imagen con la extension que le hemos puesto en la ruta
+                //que hemos creado.
+                ImageIO.write(bufferedImage, "jpg", outputImage);
+
+                /*Writer w = new FileWriter(userFolder + ubiData + "obres.json");
+                Gson g = new GsonBuilder().create();
+                g.toJson(mf.lstObras, w);*/
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }   
+
+            Obra newObra = new Obra(registre, txtTitol.getText(), txtAny.getText(), txtFormat.getText(), txtAutor.getText(), mf.pathName);
+
+            newObra.setPathAbsolute(path);
+
+            mf.obras.add(newObra);
+
+            for(Obra o: mf.obras) 
+                    mf.obrasListModel.addElement(o);
+
+                mf.lstObras.setModel(mf.obrasListModel);
+
+            this.setVisible(false);
         }
-        
-        try {
-            //Ahora vamos a guardar una imagen que hemos seleccionado en la carpeta
-            //de nuestro home.
-            //Esa carpeta de UserList2 en AppData/Local la he creado manualmente.
-            //noImage = fileChooser.getSelectedFile().getAbsolutePath();
-            BufferedImage bufferedImage = ImageIO.read(new File(path));
-            String outputImageAbsolutePath = userFolder + ubi + registre + ".jpg";
-            File outputImage = new File(outputImageAbsolutePath);
-            //Creamos la imagen con la extension que le hemos puesto en la ruta
-            //que hemos creado.
-            ImageIO.write(bufferedImage, "jpg", outputImage);
-            
-            /*Writer w = new FileWriter(userFolder + ubiData + "obres.json");
-            Gson g = new GsonBuilder().create();
-            g.toJson(mf.lstObras, w);*/
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }   
-        
-        Obra newObra = new Obra(registre, txtTitol.getText(), txtAny.getText(), txtFormat.getText(), txtAutor.getText(), mf.pathName);
-        
-        newObra.setPathAbsolute(path);
-        
-        mf.obras.add(newObra);
-        
-        for(Obra o: mf.obras) 
-                mf.obrasListModel.addElement(o);
-        
-            mf.lstObras.setModel(mf.obrasListModel);
-        
-        this.setVisible(false);
     }//GEN-LAST:event_btnInsertActionPerformed
 
+    private void errorDialog(String message) {
+        JOptionPane.showMessageDialog(null,
+                message,
+                "Something went wrong...",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
     private ImageIcon resizeImageIcon (BufferedImage originalImage, int desiredWidth, int desiredHeight) {
         int newHeight = 0;    
         int newWidth = 0;
